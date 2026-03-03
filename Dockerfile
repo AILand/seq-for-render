@@ -1,15 +1,16 @@
 FROM datalust/seq:latest
 
-# Accept EULA (required)
+# Accept EULA (mandatory)
 ENV ACCEPT_EULA=Y
 
-# Optional: Set initial admin password (change this!)
-# ENV SEQ_FIRSTRUN_ADMINPASSWORD=YourSuperStrongPasswordHere
+# Set initial admin password (CHANGE THIS to something strong!)
+ENV SEQ_FIRSTRUN_ADMINPASSWORD=YourSuperSecurePassword123!
 
-# If you want no auth for testing (not recommended long-term)
+# Optional: Disable auth for quick testing (not for prod!)
 # ENV SEQ_FIRSTRUN_NOAUTHENTICATION=True
 
-# Workaround attempt: Run as root explicitly if needed (Seq image is already root-ish)
-USER root
+# Override entrypoint to run Seq binary directly (avoids seqsvr exec failure)
+ENTRYPOINT ["/seqsvr/Seq"]
 
-# The entrypoint is already set in the base image, so no need to override unless testing
+# Default command (run as server, use --storage /data if needed, but /data is default)
+CMD ["--listen", "http://0.0.0.0:80"]
