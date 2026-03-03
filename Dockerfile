@@ -1,4 +1,4 @@
-FROM datalust/seq:2023.3
+FROM datalust/seq:2022.1
 
 # Accept EULA (mandatory)
 ENV ACCEPT_EULA=Y
